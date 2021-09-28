@@ -1,6 +1,7 @@
 const http = require('http');
 const app = require('./app');
 
+// Reads port from .env file and makes sure that it is usable
 const normalizePort = val => {
     const port = parseInt(val, 10);
 

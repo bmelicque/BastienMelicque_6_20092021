@@ -14,6 +14,8 @@ const userSchema = mongoose.Schema({
     }
 });
 
+// unique validator makes pre-validation possible for 'unique' parameter
+// and provides usable error messages
 userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userSchema);
