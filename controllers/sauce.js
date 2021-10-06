@@ -2,21 +2,21 @@ const fs = require('fs');
 const Sauce = require('../models/sauce');
 
 // Gets all sauces from the database
-exports.getAllSauces = (req, res, next) => {
+exports.getAllSauces = (req, res) => {
     Sauce.find()
     .then(sauces => res.status(200).json(sauces))
     .catch(error => res.status(400).json({error}))
 }
 
 // Gets the sauce corresponding to the id passed in the URL
-exports.getOneSauce = (req, res, next) => {
+exports.getOneSauce = (req, res) => {
     Sauce.findOne({_id: req.params.id})
     .then(sauce => res.status(200).json(sauce))
     .catch(error => res.status(404).json({error}))
 }
 
 // Adds a new sauce to the database, saves the corresponding picture
-exports.createSauce = (req, res, next) => {
+exports.createSauce = (req, res) => {
     const sauceObject = JSON.parse(req.body.sauce);
     const sauce = new Sauce({
         ...sauceObject,
@@ -28,7 +28,7 @@ exports.createSauce = (req, res, next) => {
 }
 
 // Modifies the chosen sauce and its image (if needed)
-exports.modifySauce = (req, res, next) => {
+exports.modifySauce = (req, res) => {
     // Deletes existing image if a new one is provided
     if (req.file) {
         Sauce.findOne({_id: req.params.id})
@@ -49,7 +49,7 @@ exports.modifySauce = (req, res, next) => {
 }
 
 // Deletes a sauce from the database and its image from the server
-exports.deleteSauce = (req, res, next) => {
+exports.deleteSauce = (req, res) => {
     Sauce.findOne({_id: req.params.id})
     .then(sauce => {
         const filename = sauce.imageUrl.split('/images/')[1];
@@ -63,7 +63,7 @@ exports.deleteSauce = (req, res, next) => {
 }
 
 // Manages likes and dislikes on a sauce
-exports.likeSauce = (req, res, next) => {
+exports.likeSauce = (req, res) => {
     Sauce.findOne({_id: req.params.id})
     .then(sauce => {
         const userId = req.body.userId;
